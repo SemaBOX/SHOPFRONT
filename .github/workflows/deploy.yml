@@ -23,7 +23,4 @@ jobs:
 
       - name: Run deploy script on Linode
         run: |
-          ssh -o StrictHostKeyChecking=yes \
-              -i ../private.key \
-                  ${{ secrets.LINODE_USER }}@${{ secrets.LINODE_HOST }} \
-                  "/home/deploy/deploy_myapp.sh"
+          ssh -o StrictHostKeyChecking=yes -i ../private.key ${{ secrets.LINODE_USER }}@${{ secrets.LINODE_HOST }} "/home/deploy/deploy_myapp.sh"

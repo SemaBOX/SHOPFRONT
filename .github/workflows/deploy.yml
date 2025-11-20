@@ -14,13 +14,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SEMA_ID_RSA }}
+         run: |
+          mkdir -p ~/.ssh/
+          echo "$ {{ secrets.SEMA_ID_RSA }}" > ../private.key
+          sudo chmod 600 ../private.key
+          echo "${{ secrets.LINODE_HOST }}" > ~/.ssh/known_hosts
+        shell: bash
 
       - name: Run deploy script on Linode
         run: |
           ssh -o StrictHostKeyChecking=yes \
-              -i ~/.ssh/id_rsa \
+              -i ../private.key \
                   ${{ secrets.LINODE_USER }}@${{ secrets.LINODE_HOST }} \
                   "/home/deploy/deploy_myapp.sh"

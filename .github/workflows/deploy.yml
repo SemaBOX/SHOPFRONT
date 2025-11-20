@@ -16,7 +16,7 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ SEMA_ID_RSA }}" > ../private.key
+          echo "${{ secrets.SEMA_ID_RSA }}" > ../private.key
           sudo chmod 600 ../private.key
           echo "${{ LINODE_HOST }}" > ~/.ssh/known_hosts
         shell: bash

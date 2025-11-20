@@ -15,8 +15,8 @@ jobs:
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
-              with:
-                  ssh-private-key: ${{ secrets.SEMA_ID_RSA }}
+        with:
+          ssh-private-key: ${{ secrets.SEMA_ID_RSA }}
 
       - name: Run deploy script on Linode
         run: |

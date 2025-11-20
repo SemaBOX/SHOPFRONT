@@ -18,9 +18,9 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.SEMA_ID_RSA }}" > ../private.key
           sudo chmod 600 ../private.key
-          echo "${{ LINODE_HOST }}" > ~/.ssh/known_hosts
+          echo "${{ secrets.LINODE_HOST }}" > ~/.ssh/known_hosts
         shell: bash
 
       - name: Run deploy script on Linode
         run: |
-          ssh -o StrictHostKeyChecking=yes -i ../private.key ${{ LINODE_USER }}@${{ LINODE_HOST }} "/home/deploy/deploy_myapp.sh"
+          ssh -o StrictHostKeyChecking=yes -i ../private.key ${{ secrets.LINODE_USER }}@${{ secrets.LINODE_HOST }} "/home/deploy/deploy_myapp.sh"

@@ -17,11 +17,11 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ environments.SEMA_ID_RSA }}" > ../private.key
+          echo "${{ Environments.SEMA_ID_RSA }}" > ../private.key
           sudo chmod 600 ../private.key
-          echo "${{ environments.LINODE_HOST }}" > ~/.ssh/known_hosts
+          echo "${{ Environments.LINODE_HOST }}" > ~/.ssh/known_hosts
         shell: bash
 
       - name: Run deploy script on Linode
         run: |
-          ssh -o StrictHostKeyChecking=yes -i ../private.key "${{ environments.LINODE_USER }}@${{ environments.LINODE_HOST }}" "/home/deploy/deploy_myapp.sh"
+          ssh -o StrictHostKeyChecking=yes -i ../private.key "${{ Environments.LINODE_USER }}@${{ Environments.LINODE_HOST }}" "/home/deploy/deploy_myapp.sh"

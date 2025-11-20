@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: secrets
+    environment: production
 
     steps:
       - name: Checkout (not strictly needed for SSH-only deploy, but harmless)
@@ -17,11 +17,11 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.SEMA_ID_RSA }}" > ../private.key
+          echo "${{ environments.SEMA_ID_RSA }}" > ../private.key
           sudo chmod 600 ../private.key
-          echo "${{ secrets.LINODE_HOST }}" > ~/.ssh/known_hosts
+          echo "${{ environments.LINODE_HOST }}" > ~/.ssh/known_hosts
         shell: bash
 
       - name: Run deploy script on Linode
         run: |
-          ssh -o StrictHostKeyChecking=yes -i ../private.key "${{ secrets.LINODE_USER }}@${{ secrets.LINODE_HOST }}" "/home/deploy/deploy_myapp.sh"
+          ssh -o StrictHostKeyChecking=yes -i ../private.key "${{ environments.LINODE_USER }}@${{ environments.LINODE_HOST }}" "/home/deploy/deploy_myapp.sh"

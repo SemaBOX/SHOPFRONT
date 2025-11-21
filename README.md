@@ -33,6 +33,7 @@ Developers can start with [the developer tutorials](https://www.odoo.com/documen
 
 
 ## Scripts 
+```bash
 root@localhost:~# cat /home/deploy/deploy_myapp.sh
 #!/usr/bin/env bash
 set -e
@@ -77,7 +78,7 @@ LimitNOFILE=65536
 
 [Install]
 WantedBy=multi-user.target
-
+```
 
 ## Security
 

@@ -40,7 +40,7 @@ set -e
 
 BRANCH="staging"
 
-cd "$APP_DIR"
+cd "/root/odoo"
 
 echo "Pulling latest code..."
 git fetch semabox "$BRANCH"

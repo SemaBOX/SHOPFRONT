@@ -17,5 +17,4 @@ jobs:
         host: ${{ secrets.LINODE_HOST }}
         username: ${{ secrets.LINODE_USER }}
         key: ${{ secrets.SEMA_ID_RSA }}
-        port: 22
         script: whoami

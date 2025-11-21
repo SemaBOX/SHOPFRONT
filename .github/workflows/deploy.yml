@@ -10,18 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-    env: 
-      HOME: "~/"
-
     steps:
       - name: Setup SSH
         run: |
-          mkdir -p "$HOME/.ssh"
-          echo "${{ secrets.LINODE_SSH_KEY }}" > "$HOME/.ssh/id_rsa"
-          chmod 600 "$HOME/.ssh/id_rsa"
-          touch "$HOME/.ssh/known_hosts"
-          ssh-keyscan -H "${{ secrets.LINODE_HOST }}" >> "$HOME/.ssh/known_hosts"
+          echo "${{ secrets.LINODE_SSH_KEY }}" > "./id_rsa"
+          chmod 600 "./id_rsa"
 
       - name: Run deploy script on Linode
         run: |
-          ssh -o StrictHostKeyChecking=yes -i ../private.key "${{ vars.LINODE_USER }}@${{ vars.LINODE_HOST }}" "/home/deploy/deploy_myapp.sh"
+          ssh -o StrictHostKeyChecking=yes -i "./id_rsa" "${{ vars.LINODE_USER }}@${{ vars.LINODE_HOST }}" "/home/deploy/deploy_myapp.sh"

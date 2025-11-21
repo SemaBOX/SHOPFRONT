@@ -11,16 +11,11 @@ jobs:
     environment: production
 
     steps:
-      - name: Setup SSH
-        run: |
-          mkdir -p "$HOME/.ssh"
-          chmod 700 "$HOME/.ssh"
-          echo "${{ secrets.SEMA_ID_RSA }}" > "$HOME/.ssh/id_rsa"
-          chmod 600 "$HOME/.ssh/id_rsa"
-          ssh-keyscan -H "${{ secrets.LINODE_HOST }}" >> "$HOME/.ssh/known_hosts"
-          chmod 644 "$HOME/.ssh/known_hosts"
-          ssh -i "$HOME/.ssh/id_rsa" -o StrictHostKeyChecking=yes root@${{ secrets.LINODE_HOST }}
-
-      - name: Run deploy script on Linode
-        run: |
-          ssh -i "./id_rsa" "${{ vars.LINODE_USER }}@${{ vars.LINODE_HOST }}" "/home/deploy/deploy_myapp.sh"
+    - name: Execute remote SSH commands using SSH key
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.LINODE_HOST }}
+        username: ${{ secrets.LINODE_USER }}
+        key: ${{ secrets.SEMA_ID_RSA }}
+        port: 22
+        script: whoami

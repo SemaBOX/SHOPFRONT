@@ -16,10 +16,11 @@ jobs:
 
       - name: Setup SSH
         run: |
-          mkdir -p ~/.ssh/
-          echo "${{ vars.SEMA_ID_RSA }}" > ../private.key
-          sudo chmod 600 ../private.key
-          echo "${{ vars.LINODE_HOST }}" > ~/.ssh/known_hosts
+          mkdir -p ~/.ssh
+          echo "${{ secrets.LINODE_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          touch ~/.ssh/known_hosts
+          ssh-keyscan -H "${{ secrets.LINODE_HOST }}" >> ~/.ssh/known_hosts
         shell: bash
 
       - name: Run deploy script on Linode

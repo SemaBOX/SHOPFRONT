@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Setup SSH
         run: |
+          ls "./"
+          pwd
           echo "${{ secrets.LINODE_SSH_KEY }}" > "./id_rsa"
           chmod 600 "./id_rsa"
 

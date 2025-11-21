@@ -11,9 +11,6 @@ jobs:
     environment: production
 
     steps:
-      - name: Checkout (not strictly needed for SSH-only deploy, but harmless)
-        uses: actions/checkout@v4
-
       - name: Setup SSH
         run: |
           mkdir -p "$HOME/.ssh"
@@ -21,7 +18,6 @@ jobs:
           chmod 600 "$HOME/.ssh"/id_rsa
           touch "$HOME/.ssh"/known_hosts
           ssh-keyscan -H "${{ secrets.LINODE_HOST }}" >> "$HOME/.ssh"/known_hosts
-        shell: bash
 
       - name: Run deploy script on Linode
         run: |

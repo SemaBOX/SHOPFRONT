@@ -31,6 +31,54 @@ To learn the software, we recommend the [Odoo eLearning](https://www.odoo.com/sl
 or [Scale-up, the business game](https://www.odoo.com/page/scale-up-business-game).
 Developers can start with [the developer tutorials](https://www.odoo.com/documentation/master/developer/howtos.html).
 
+
+## Scripts 
+root@localhost:~# cat /home/deploy/deploy_myapp.sh
+#!/usr/bin/env bash
+set -e
+
+BRANCH="staging"
+
+cd "$APP_DIR"
+
+echo "Pulling latest code..."
+git fetch semabox "$BRANCH"
+git checkout "$BRANCH"
+git pull semabox "$BRANCH"
+
+echo "run odoo"
+# Example for Node
+systemctl enable --now odoo.service
+
+# Check status
+#systemctl status odoo.service
+
+# Follow logs
+#journalctl -u odoo.service -f
+
+# Stop Odoo
+#systemctl disable --now odoo.service
+root@localhost:~# cat /etc/systemd/system/odoo.service 
+[Unit]
+Description=Odoo OpenSource ERP (Community)
+Requires=postgresql.service
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=python3 /root/odoo/odoo-bin --addons-path=addons -d mydb
+WorkingDirectory=/root/odoo
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+
+
 ## Security
 
 If you believe you have found a security issue, check our [Responsible Disclosure page](https://www.odoo.com/security-report)

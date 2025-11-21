@@ -13,10 +13,13 @@ jobs:
     steps:
       - name: Setup SSH
         run: |
-          ls "./"
-          pwd
-          echo "${{ secrets.LINODE_SSH_KEY }}" > "./id_rsa"
-          chmod 600 "./id_rsa"
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          echo "${{ secrets.SEMA_ID_RSA }}" > "$HOME/.ssh/id_rsa"
+          chmod 600 "$HOME/.ssh/id_rsa"
+          ssh-keyscan -H "${{ secrets.LINODE_HOST }}" >> "$HOME/.ssh/known_hosts"
+          chmod 644 "$HOME/.ssh/known_hosts"
+          ssh -i "$HOME/.ssh/id_rsa" -o StrictHostKeyChecking=yes root@${{ secrets.LINODE_HOST }}
 
       - name: Run deploy script on Linode
         run: |

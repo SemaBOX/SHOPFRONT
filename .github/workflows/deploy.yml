@@ -11,7 +11,7 @@ jobs:
     environment: production
 
     env: 
-      HOME: "/home/runner"
+      HOME: "~/"
 
     steps:
       - name: Setup SSH

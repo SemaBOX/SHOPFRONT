@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
     steps:
     - name: Execute remote SSH commands using SSH key
       uses: appleboy/ssh-action@v1

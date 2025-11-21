@@ -16,4 +16,4 @@ jobs:
         host: 139.162.174.10
         username: root
         key: ${{ secrets.SEMA_ID_RSA }}
-        script: whoami
+        script: /home/deploy/deploy_myapp.sh
